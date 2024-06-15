@@ -2,15 +2,60 @@ import image from "../assets/login.jpg";
 import Button from "../components/button";
 import Wrapper from "../components/wrapper";
 import { AiOutlineUser, AiOutlineMail, AiFillLock } from "react-icons/ai";
-import {ReactSVG} from 'react-svg';
-import Line from '../assets/svg/line.svg';
-import Google from '../assets/svg/google-icon.svg';
-import Facebook from '../assets/svg/facebook-icon.svg';
+import { ReactSVG } from "react-svg";
+import Line from "../assets/svg/line.svg";
+import Google from "../assets/svg/google-icon.svg";
+import Facebook from "../assets/svg/facebook-icon.svg";
 import ExternalSignIn from "../components/externalSignin";
 import LoginBg from "../assets/svg/login-bg.svg";
-import {Link} from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function Login() {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+  const [userDetails, setDetails] = useState(null);
+  const [response, setResponse] = useState({});
+  const Navigate = useNavigate("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await getUser(data.email, data.password);
+    console.log(userDetails);
+    console.log(data);
+  };
+  async function getUser(email, password) {
+    // setLoading(true);
+    const api = await axios.post("http://localhost:8000/api/v1/auth/signIn", {
+      email: email,
+      password: password,
+    });
+    setDetails(api.data.data);
+    // setLoading(false);
+    console.log(userDetails.token);
+    if (userDetails.token) {
+      Cookies.set("userName", userDetails.user.userName, {
+        expires: new Date(Date.now() + 9999999),
+        httpOnly: false,
+      });
+      Cookies.set("token", userDetails.token, {
+        expires: new Date(Date.now() + 9999999),
+        httpOnly: false,
+      });
+      Cookies.set("currentUser", userDetails.user.id, {
+        expires: new Date(Date.now() + 9999999),
+        httpOnly: false,
+      });
+      Navigate("/viewEmployees");
+    } else {
+      setResponse({ message: "Invalid credentials" });
+    }
+  }
+
   return (
     <div className="flex w-full h-[100vh] font-quicksand">
       <div className="w-[55%] h-full overflow-hidden">
@@ -30,24 +75,33 @@ export default function Login() {
           <p className="text-[#C0C0C0] text-center">
             Please enter your information to login!
           </p>
-          <div className="w-[70%] flex flex-col gap-8">
+          <form className="w-[70%] flex flex-col gap-8" onSubmit={handleSubmit}>
             <Wrapper
-              label="Username"
-              placeholder="Enter your username"
+              label="Email"
+              name="email"
+              handleChange={(e) => setData({ ...data, email: e.target.value })}
+              placeholder="Enter your email"
+              value={data.email}
               icon={
                 <AiOutlineUser className="text-darkb text-lg font-extrabold" />
               }
             />
+
             <Wrapper
               label="Password"
+              name="password"
+              handleChange={(e) =>
+                setData({ ...data, password: e.target.value })
+              }
               placeholder="Enter your password"
+              value={data.password}
               icon={
                 <AiFillLock className="text-darkb text-lg font-extrabold" />
               }
             />
-            <Link to="/createEmployee">
-              <Button className="mt-4" content={"Login"} />
-            </Link>
+            {/* <Link to="/view"> */}
+            <Button className="mt-4 w-full" content={"Login"} type="submit" />
+            {/* </Link> */}
 
             <div className="flex gap-4 justify-center">
               <p>Already have an account?</p>
@@ -64,7 +118,7 @@ export default function Login() {
               <ExternalSignIn src={Google} text="Sign In With Google" />
               <ExternalSignIn src={Facebook} text="Sign In With Facebook" />
             </div>
-          </div>
+          </form>
         </div>
         <ReactSVG
           src={LoginBg}
