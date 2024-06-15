@@ -93,8 +93,8 @@ export default function Login() {
               handleChange={(e) =>
                 setData({ ...data, password: e.target.value })
               }
-              placeholder="Enter your password"
               value={data.password}
+              placeholder="Enter your password"
               icon={
                 <AiFillLock className="text-darkb text-lg font-extrabold" />
               }
