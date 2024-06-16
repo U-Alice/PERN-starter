@@ -16,7 +16,7 @@ export default function ViewEmployee() {
     const api = await fetch("http://localhost:8000/api/v1/employees/getAll", {
       method: "GET",
       headers: {
-        Authorization: "Bearer " + Cookies.get("token"),
+        Authorization: "Bearer " + Cookies.get("accessToken"),
       },
     });
     let data = await api.json();

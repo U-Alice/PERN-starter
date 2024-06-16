@@ -7,7 +7,8 @@ import { Modal } from "@mantine/core";
 import useCustomDisclosure from "../hooks/useCustomDisclosure";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
+import { notification } from "antd";
 
 export default function CreateEmployee() {
   const { opened, open, close } = useCustomDisclosure();
@@ -37,8 +38,19 @@ export default function CreateEmployee() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await sendRequest(data.email, data.firstName,data.lastName, data.national_id, data.telephone, data.department, data.position, data.laptop_manufacturer, data.model, data.serialNumber);
-    close()
+    await sendRequest(
+      data.email,
+      data.firstName,
+      data.lastName,
+      data.national_id,
+      data.telephone,
+      data.department,
+      data.position,
+      data.laptop_manufacturer,
+      data.model,
+      data.serialNumber
+    );
+    close();
   };
   async function sendRequest(
     email,
@@ -53,9 +65,8 @@ export default function CreateEmployee() {
     serialNumber
   ) {
     // setLoading(true);
-    const api = await axios.post(
-      "http://localhost:8000/api/v1/employees/registerEmployee",
-      {
+    const api = await axios
+      .post("http://localhost:8000/api/v1/employees/registerEmployee", {
         firstName: firstName,
         lastName: lastName,
         national_id: national_id,
@@ -66,13 +77,16 @@ export default function CreateEmployee() {
         laptop_manufacturer: laptop_manufacturer,
         model: model,
         serialNumber: serialNumber,
-      }
-    );
-    setDetails(api.data.data);
-    // setLoading(false);
-    console.log(userDetails.token);
-
-    Navigate("/viewEmployees");
+      })
+      .then(({ data }) => {
+        setDetails(data.data);
+        notification.success({ message: "Employee Created successfully!" });
+        Navigate("/viewEmployees");
+      }).catch((err)=>{ 
+        notification.error({
+          message: err.response.data.message || "Invalid Credentials!",
+        });
+      });
   }
 
   return (
@@ -136,7 +150,9 @@ export default function CreateEmployee() {
               <div className="flex flex-col gap-8 mt-8">
                 <Wrapper
                   name="firstName"
-                  handleChange={(e) =>setData({ ...data, firstName: e.target.value })}
+                  handleChange={(e) =>
+                    setData({ ...data, firstName: e.target.value })
+                  }
                   value={data.firstName}
                   label="First Name"
                   icon={<AiOutlineUser />}
@@ -164,7 +180,9 @@ export default function CreateEmployee() {
                 />
                 <Wrapper
                   name="telephone"
-                  handleChange={(e) => setData({ ...data, telephone: e.target.value })}
+                  handleChange={(e) =>
+                    setData({ ...data, telephone: e.target.value })
+                  }
                   value={data.telephone}
                   label="Telephone"
                   icon={<AiOutlineUser />}

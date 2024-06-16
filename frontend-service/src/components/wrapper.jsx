@@ -1,6 +1,6 @@
 import {Input} from '@mantine/core';
 
-export default function Wrapper({label, icon, placeholder, name, value, handleChange}){
+export default function Wrapper({label, icon, placeholder, name, value, handleChange, required}){
     return (
       <div className="flex flex-col gap-3">
         <div className="flex gap-2">
@@ -9,6 +9,7 @@ export default function Wrapper({label, icon, placeholder, name, value, handleCh
         </div>
 
         <input
+          required={required}
           name={name}
           value={value}
           type="text"

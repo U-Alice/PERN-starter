@@ -16,9 +16,7 @@ app.use(express.urlencoded());
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/employees", employeeRoutes);
-
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOutput));
-
 app.listen(process.env.PORT, () => {
   console.log("Application running on port:  " + process.env.PORT);
 });
