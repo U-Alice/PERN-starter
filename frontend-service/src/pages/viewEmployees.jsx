@@ -4,10 +4,12 @@ import Sidebar from "../components/sidenav";
 import Table from "../components/table";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import PaginatedTable from "../components/PaginatedTable";
 // import { SideNav } from "../components/sidenav";
 
 export default function ViewEmployee() {
   const [data, setData] = useState([]);
+
   const headers = ['First Name', 'Last Name', 'Email', 'Phone Number', 'National Id', 'Telephone', 'Email', 'Department', 'Position', 'Laptop Manufacturer']
 
   const getData = async () => {
@@ -27,10 +29,12 @@ export default function ViewEmployee() {
     getData();
   }, []);
   return (
-    <div className="flex h-screen bg-blue p-2 font-quicksand">
-      <Sidebar />
-      <div className="flex-1 p-2">
-        <Table data={data} headers={headers}/>
+    <div className="flex h-screen w-full bg-blue p-2 font-quicksand">
+      <div className="w-[35%]">
+        <Sidebar />
+      </div>
+      <div className="w-[80%] flex-1 p-[0.5%]">
+        <PaginatedTable data={data} itemsPerPage={5} headers={headers} />
       </div>
     </div>
   );

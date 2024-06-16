@@ -4,7 +4,7 @@ const Sidebar = () => {
   return (
     <div class="relative flex  h-full  w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
       <div class="p-4 mb-2">
-        <h5 class="block  text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+        <h5 class="block  text-xl antialiased font-semibold leading-snug tracking-normal text-darkb">
           Sidebar
         </h5>
       </div>

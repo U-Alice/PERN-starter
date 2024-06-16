@@ -78,7 +78,7 @@ export default function CreateEmployee() {
   return (
     <>
       <button
-        class="flex select-none items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle text-xs font-bold uppercase shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        class="flex select-none items-center gap-3 rounded-lg bg-darkb text-white py-2 px-4 text-center align-middle text-xs font-bold uppercase shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         type="button"
         onClick={open}
       >
@@ -95,7 +95,7 @@ export default function CreateEmployee() {
         Add member
       </button>
       <Modal opened={opened} onClose={close} centered>
-        <div className="bg-white h-full w-full rounded-md p-2">
+        <div className="bg-white h-full w-full rounded-md p-2 font-quicksand">
           <div className="flex flex-col gap-4">
             <p className="text-center font-bold text-darkb">
               EMPLOYEE REGISTRATION FORM
