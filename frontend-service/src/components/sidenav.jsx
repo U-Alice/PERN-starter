@@ -1,6 +1,8 @@
 import React from "react";
+import useAuth from "../context/authContext";
 
 const Sidebar = () => {
+  const {logout} = useAuth();
   return (
     <div class="relative flex  h-full  w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
       <div class="p-4 mb-2">
@@ -122,6 +124,7 @@ const Sidebar = () => {
         <div
           role="button"
           class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+          onClick={logout}
         >
           <div class="grid mr-4 place-items-center">
             <svg

@@ -175,11 +175,7 @@ import { Pagination } from "./pagination";
                       {record.telephone}
                     </p>
                   </td>
-                  <td className="p-4 border-b border-blue ">
-                    <p className="block text-sm antialiased font-normal leading-normal text-darkb">
-                      {record.telephone}
-                    </p>
-                  </td>
+                
                   <td className="p-4 border-b border-blue ">
                     <p className="block text-sm antialiased font-normal leading-normal text-darkb">
                       {record.department}

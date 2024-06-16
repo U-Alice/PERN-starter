@@ -13,52 +13,20 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { notification } from "antd";
+import useAuth from "../context/authContext";
 
 export default function Login() {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const [userDetails, setDetails] = useState(null);
-  const Navigate = useNavigate("");
+
+  const {login} = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await getUser(data.email, data.password);
-    console.log(userDetails);
-    console.log(data);
-  };
-  async function getUser(email, password) {
-    // setLoading(true);
-    const api = axios
-      .post("http://localhost:8000/api/v1/auth/signIn", {
-        email: email,
-        password: password,
-      })
-      .then(({ data }) => {
-        Cookies.set("userName", data.data.user.userName, {
-          expires: new Date(Date.now() + 9999999),
-          httpOnly: false,
-        });
-        Cookies.set("accessToken", data.data.token, {
-          expires: new Date(Date.now() + 9999999),
-          httpOnly: false,
-        });
-        Cookies.set("currentUser", data.data.user.id, {
-          expires: new Date(Date.now() + 9999999),
-          httpOnly: false,
-        });
-        notification.success({ message: "Login Successful!" });
-        Navigate("/viewEmployees");
-        setDetails(api.data.data);
-      })
-      .catch((err) => {
-          console.error("Error response:", err.response);
-          notification.error({
-            message: err.response.data.message || "Invalid Credentials!",
-          });
-      });
-  }
+    login(data.email, data.password);
+ };
 
   return (
     <div className="flex w-full h-[100vh] font-quicksand">

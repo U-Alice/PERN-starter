@@ -2,6 +2,8 @@ import React, { createContext, ReactNode, useContext, useEffect } from "react";
 import useStateCallback from "../hooks/useStateCallback";
 import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import axios from 'axios';
+import {notification} from 'antd';
 
 const authContextDefaultValues = {
   user: null,
@@ -49,10 +51,9 @@ export function AuthProvider({ children }) {
         });
         notification.success({ message: "Login Successful!" });
         navigate("/viewEmployees");
-        setDetails(api.data.data);
+        setUser(data.user);
       })
       .catch((err) => {
-        console.error("Error response:", err.response);
         notification.error({
           message: err.response.data.message || "Invalid Credentials!",
         });

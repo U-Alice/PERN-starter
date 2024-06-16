@@ -10,7 +10,7 @@ import PaginatedTable from "../components/PaginatedTable";
 export default function ViewEmployee() {
   const [data, setData] = useState([]);
 
-  const headers = ['First Name', 'Last Name', 'Email', 'Phone Number', 'National Id', 'Telephone', 'Email', 'Department', 'Position', 'Laptop Manufacturer']
+  const headers = ['First Name', 'Last Name', 'Email', 'Phone Number', 'National Id',  'Email', 'Department', 'Position', 'Laptop Manufacturer']
 
   const getData = async () => {
     const api = await fetch("http://localhost:8000/api/v1/employees/getAll", {
