@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { User } from '../types/User';
 
-export const createUserValidation = (body: User)=>{
+export const createUserValidation = (body: Partial<User>)=>{
     let data = Joi.object({
       fullName: Joi.string().required().max(50).min(2).messages({
         "string.base": "Full name should be a string.",
@@ -98,3 +98,26 @@ export const registerEmployeeValidation = (body: User)=>{
   return employeeSchema.validate(body);
 
 }
+export const updateUserValidation = (body: User) => {
+  let data = Joi.object({
+    fullName: Joi.string().required().max(50).min(2).messages({
+      "string.base": "Full name should be a string.",
+      "string.empty": "Full name is required.",
+      "string.min": "Full name should have a minimum length of {#limit}.",
+      "string.max": "Full name should have a maximum length of {#limit}.",
+    }),
+    email: Joi.string().required().email().messages({
+      "string.base": "Email should be a string.",
+      "string.empty": "Email is required.",
+      "string.email": "Email must be a valid email address.",
+    }),
+    userName: Joi.string().required().alphanum().min(3).max(30).messages({
+      "string.base": "Username should be a string.",
+      "string.empty": "Username is required.",
+      "string.alphanum": "Username must only contain alpha-numeric characters.",
+      "string.min": "Username should have a minimum length of {#limit}.",
+      "string.max": "Username should have a maximum length of {#limit}.",
+    }),
+  });
+  return data.validate(body);
+};

@@ -78,3 +78,41 @@ export const getAllUsers = async (): Promise<ApiResponse<User[] | null>> => {
      return apiResponse;
   }
 };
+
+export const updateUser = async (
+  updatedUser: Partial<User>,
+  id: string
+ 
+): Promise<ApiResponse<User | null>> => {
+  try {
+    const { error } = createUserValidation(updatedUser);
+    if (error)
+      return {
+        success: false,
+        status: 400,
+        message: "Validation error: " + error.details[0].message,
+        data: null,
+      };
+
+    const user = await prisma.user.update({
+      where: { id },
+      data: updatedUser,
+    });
+
+    let apiResponse: ApiResponse<User> = {
+      message: "User updated successfully!",
+      success: true,
+      status: 200,
+      data: user,
+    };
+    return apiResponse;
+  } catch (err: any) {
+    let apiResponse: ApiResponse<null> = {
+      message: err.message,
+      success: false,
+      status: 500,
+    };
+    console.log(err);
+    return apiResponse;
+  }
+};

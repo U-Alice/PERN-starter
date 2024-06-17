@@ -1,7 +1,9 @@
   import React from "react";
   import CreateEmployee from "./createEmployee";
 import { Pagination } from "./pagination";
-
+import { BiPencil, BiSolidTrash } from "react-icons/bi";
+import {IconButton, Tooltip} from "@material-tailwind/react";
+import UpdateEmployee from "./updateEmployee";
   const Table = ({
     data,
     headers,
@@ -10,7 +12,9 @@ import { Pagination } from "./pagination";
     totalPages,
     onNext,
     onPrevious,
-    handleSearch
+    handleSearch, 
+    UpdateRecord,
+    deleteRecord,
   }) => {
     const pages = [];
 
@@ -131,7 +135,9 @@ import { Pagination } from "./pagination";
                 })}
 
                 <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                  <p className="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"></p>
+                  <p className="block text-sm antialiased leading-none text-darkb font-bold opacity-70">
+                    Actions
+                  </p>
                 </th>
               </tr>
             </thead>
@@ -175,7 +181,7 @@ import { Pagination } from "./pagination";
                       {record.telephone}
                     </p>
                   </td>
-                
+
                   <td className="p-4 border-b border-blue ">
                     <p className="block text-sm antialiased font-normal leading-normal text-darkb">
                       {record.department}
@@ -190,6 +196,10 @@ import { Pagination } from "./pagination";
                     <p className="block text-sm antialiased font-normal leading-normal text-darkb">
                       {record.laptop_manufacturer}
                     </p>
+                  </td>
+                  <td className="p-4 border-b border-blue ">
+                    {UpdateRecord(record)}
+                    {deleteRecord(record.id)}
                   </td>
                 </tr>
               ))}

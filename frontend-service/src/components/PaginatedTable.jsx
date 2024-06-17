@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "./table";
 
-const PaginatedTable = ({ data, itemsPerPage, headers }) => {
+const PaginatedTable = ({ data, itemsPerPage, headers, UpdateRecord, deleteRecord }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [totalPages, setTotalPages] = useState(0);
@@ -42,6 +42,8 @@ const PaginatedTable = ({ data, itemsPerPage, headers }) => {
         totalPages={totalPages}
         onNext={handleNext}
         onPrevious={handlePrevious}
+        UpdateRecord={UpdateRecord}
+        deleteRecord={deleteRecord}
       />
     </div>
   );
